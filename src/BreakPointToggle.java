@@ -68,7 +68,9 @@ public class BreakPointToggle extends AnAction {
     public void removeAllMethodBreakpoint(Project project){
         List<Breakpoint> breakpoints = DebuggerManagerEx.getInstanceEx(project).getBreakpointManager().getBreakpoints();
         for(Breakpoint breakpoint : breakpoints){
-            DebuggerManagerEx.getInstanceEx(project).getBreakpointManager().removeBreakpoint(breakpoint);
+            if(breakpoint.getCategory().toString().equals("method_breakpoints")){
+                DebuggerManagerEx.getInstanceEx(project).getBreakpointManager().removeBreakpoint(breakpoint);
+            }
         }
     }
 
@@ -102,26 +104,28 @@ public class BreakPointToggle extends AnAction {
             getAllJava(childFile,psiManager,project);
         }
         if(psiFile != null){
-            final PsiDocumentManager manager = PsiDocumentManager.getInstance(project);
-            final Document document = manager.getDocument(psiFile);
+
 
             if(psiFile.getFileType().getDefaultExtension().equals("java")){
-                getAllMethods(psiFile);
-            }
-            for(PsiMethod method : psiMethods){
-                String name = method.getName();
-                String type = method.getReturnType().getCanonicalText();
-                String modif = method.getModifierList().getText();
+                final PsiDocumentManager manager = PsiDocumentManager.getInstance(project);
+                final Document document = manager.getDocument(psiFile);
+
                 if(document != null){
                     String[] docLines = document.getText().split("\n");
                     for(int i = 0; i<docLines.length;i++){
                         String line = docLines[i];
-                        if(line.contains(name) && line.contains(type) && line.contains(modif)){
-                            DebuggerManagerEx.getInstanceEx(project).getBreakpointManager().addMethodBreakpoint(document,i);
+                        if(line.contains("(")){
+                            if(!line.contains(";")){
+                                if(line.contains("private") || line.contains("public") || line.contains("protected")){
+                                    DebuggerManagerEx.getInstanceEx(project).getBreakpointManager().addMethodBreakpoint(document,i);
+                                }
+                            }
+
                         }
                     }
                 }
             }
+
         }
     }
 
