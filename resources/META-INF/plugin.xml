@@ -1,0 +1,31 @@
+<idea-plugin>
+  <id>br.com.breakpoint.toogleAll</id>
+  <name>Simple Toogle All Method Breakpoint</name>
+  <version>1.0</version>
+  <vendor email="danielsussa@gmail.com" url="http://www.yourcompany.com">Without Company</vendor>
+
+  <description><![CDATA[
+      A simple Toggle All breakpoint for methods<br>
+    ]]></description>
+
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="145.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+  </extensions>
+
+  <actions>
+    <action id="BreakPointToggle" class="BreakPointToggle" text="_Toggle All Methods Breakpoint" description="Breakpoint for all methods">
+        <add-to-group group-id="RunMenu" anchor="last"/>
+    </action>
+  </actions>
+
+</idea-plugin>
