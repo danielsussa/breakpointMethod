@@ -30,7 +30,7 @@ public class SimpleBreakpointInput {
                     }
                 }
 
-                if(line.contains("class")){
+                if(line.contains("class ")){
                     className =  line.split("class")[1].replaceAll("\\{","").split(" ")[1];
                 }
             }
