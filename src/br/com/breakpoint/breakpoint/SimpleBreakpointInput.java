@@ -25,15 +25,20 @@ public class SimpleBreakpointInput {
                 if(line.contains("(")){
                     if(!line.contains(";")){
                         if(line.contains("private ") || line.contains("public ") || line.contains("protected ") || line.contains("throws ") || line.contains("void ")){
-                            if(!line.contains(className)){
-                                newMethod = true;
+                            if(className != null){
+                                if(!line.contains(className)){
+                                    newMethod = true;
+                                }
                             }
                         }
                     }
                 }
 
-                if(line.contains("class ")){
+                if(line.contains(" class ")){
                     className =  line.split("class")[1].replaceAll("\\{","").split(" ")[1];
+                }
+                if(line.contains(" enum ")){
+                    className =  line.split("enum")[1].replaceAll("\\{","").split(" ")[1];
                 }
 
                 if(newMethod){

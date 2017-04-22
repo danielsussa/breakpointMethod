@@ -27,20 +27,13 @@ public class BreakPointToggleSelected extends AnAction {
             event.getPresentation().setText("Toggle Methods Breakpoints");
         }
 
-        PsiElement element = event.getData(LangDataKeys.PSI_ELEMENT);
-        if(element == null){
-            event.getPresentation().setVisible(false);
-        }else {
-            event.getPresentation().setVisible(true);
-        }
-
-        event.getPresentation().setIcon(AllIcons.Debugger.Db_dep_method_breakpoint);
+        event.getPresentation().setIcon(AllIcons.Debugger.Db_dep_line_breakpoint);
 
     }
 
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getData(PlatformDataKeys.PROJECT);
-        PsiElement element = event.getData(LangDataKeys.PSI_ELEMENT);
+        PsiElement[] elements = event.getData(LangDataKeys.PSI_ELEMENT_ARRAY);
 
         if(GeneralConfig.isActive){
             GeneralConfig.isActive = false;
@@ -48,7 +41,10 @@ public class BreakPointToggleSelected extends AnAction {
         }else {
             GeneralConfig.isActive = true;
             GeneralConfig.removeAll(project);
-            process(element);
+
+            for(PsiElement element : elements){
+                process(element);
+            }
         }
 
     }
