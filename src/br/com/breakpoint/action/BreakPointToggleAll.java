@@ -31,9 +31,8 @@ public class BreakPointToggleAll extends AnAction {
         anActionEvent.getPresentation().setEnabledAndVisible(navigatable != null);
 
         Editor editor = anActionEvent.getData(CommonDataKeys.EDITOR);
-        anActionEvent.getPresentation().setVisible(true);
+        anActionEvent.getPresentation().setVisible(false);
         anActionEvent.getPresentation().setEnabled(editor != null);
-        //anActionEvent.getPresentation().setIcon(AllIcons.General.);
     }
 
 

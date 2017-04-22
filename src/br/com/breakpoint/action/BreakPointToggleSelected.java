@@ -3,6 +3,7 @@ package br.com.breakpoint.action;
 import br.com.breakpoint.breakpoint.GeneralConfig;
 import br.com.breakpoint.breakpoint.RemoveAll;
 import br.com.breakpoint.breakpoint.SimpleBreakpointInput;
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
@@ -18,19 +19,28 @@ import com.intellij.psi.PsiJavaFile;
 public class BreakPointToggleSelected extends AnAction {
 
     @Override
-    public void update(AnActionEvent anActionEvent) {
-        Editor editor = anActionEvent.getData(CommonDataKeys.EDITOR);
+    public void update(AnActionEvent event) {
+        Editor editor = event.getData(CommonDataKeys.EDITOR);
         if(GeneralConfig.isActive){
-            anActionEvent.getPresentation().setText("Clear All Breakpoints");
+            event.getPresentation().setText("Clear All Breakpoints");
         }else {
-            anActionEvent.getPresentation().setText("Toggle Methods Breakpoints");
+            event.getPresentation().setText("Toggle Methods Breakpoints");
         }
+
+        PsiElement element = event.getData(LangDataKeys.PSI_ELEMENT);
+        if(element == null){
+            event.getPresentation().setVisible(false);
+        }else {
+            event.getPresentation().setVisible(true);
+        }
+
+        event.getPresentation().setIcon(AllIcons.Debugger.Db_dep_method_breakpoint);
 
     }
 
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getData(PlatformDataKeys.PROJECT);
-        PsiElement[] elements = event.getData(LangDataKeys.PSI_ELEMENT_ARRAY);
+        PsiElement element = event.getData(LangDataKeys.PSI_ELEMENT);
 
         if(GeneralConfig.isActive){
             GeneralConfig.isActive = false;
@@ -38,9 +48,7 @@ public class BreakPointToggleSelected extends AnAction {
         }else {
             GeneralConfig.isActive = true;
             GeneralConfig.removeAll(project);
-            for(PsiElement element : elements){
-                process(element);
-            }
+            process(element);
         }
 
     }

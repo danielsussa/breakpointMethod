@@ -24,7 +24,7 @@ public class SimpleBreakpointInput {
                 String line = docLines[i];
                 if(line.contains("(")){
                     if(!line.contains(";")){
-                        if(line.contains("private") || line.contains("public") || line.contains("protected")){
+                        if(line.contains("private ") || line.contains("public ") || line.contains("protected ") || line.contains("throws ") || line.contains("void ")){
                             if(!line.contains(className)){
                                 newMethod = true;
                             }
