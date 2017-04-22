@@ -11,12 +11,5 @@ import java.util.List;
  */
 public class RemoveAll {
 
-    static public void execute(Project project){
-        List<Breakpoint> breakpoints = DebuggerManagerEx.getInstanceEx(project).getBreakpointManager().getBreakpoints();
-        for(Breakpoint breakpoint : breakpoints){
-            if(breakpoint.getCategory().toString().equals("method_breakpoints")){
-                DebuggerManagerEx.getInstanceEx(project).getBreakpointManager().removeBreakpoint(breakpoint);
-            }
-        }
-    }
+
 }

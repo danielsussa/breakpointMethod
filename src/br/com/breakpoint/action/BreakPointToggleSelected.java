@@ -34,10 +34,10 @@ public class BreakPointToggleSelected extends AnAction {
 
         if(GeneralConfig.isActive){
             GeneralConfig.isActive = false;
-            RemoveAll.execute(project);
+            GeneralConfig.removeAll(project);
         }else {
             GeneralConfig.isActive = true;
-            RemoveAll.execute(project);
+            GeneralConfig.removeAll(project);
             for(PsiElement element : elements){
                 process(element);
             }

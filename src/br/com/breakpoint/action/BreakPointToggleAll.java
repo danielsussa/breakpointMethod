@@ -51,10 +51,10 @@ public class BreakPointToggleAll extends AnAction {
 
         if(GeneralConfig.isActive){
             GeneralConfig.isActive = false;
-            RemoveAll.execute(project);
+            GeneralConfig.removeAll(project);
         }else {
             GeneralConfig.isActive = true;
-            RemoveAll.execute(project);
+            GeneralConfig.removeAll(project);
             getPackages(project);
         }
 
