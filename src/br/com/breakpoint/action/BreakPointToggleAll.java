@@ -1,19 +1,18 @@
-import com.intellij.CommonBundle;
-import com.intellij.debugger.DebuggerManagerEx;
-import com.intellij.debugger.ui.breakpoints.Breakpoint;
-import com.intellij.debugger.ui.breakpoints.MethodBreakpoint;
-import com.intellij.icons.AllIcons;
+package br.com.breakpoint.action;
+
+import br.com.breakpoint.ProjectViewSettingsImpl;
+import br.com.breakpoint.Visitor;
+import br.com.breakpoint.breakpoint.GeneralConfig;
+import br.com.breakpoint.breakpoint.RemoveAll;
+import br.com.breakpoint.breakpoint.SimpleBreakpointInput;
 import com.intellij.ide.projectView.ProjectViewSettings;
 import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
-import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.containers.ContainerUtil;
 
 import java.util.*;
@@ -21,7 +20,7 @@ import java.util.*;
 /**
  * Created by DEK on 21/04/2017.
  */
-public class BreakPointToggle extends AnAction {
+public class BreakPointToggleAll extends AnAction {
 
     @Override
     public void update(AnActionEvent anActionEvent) {
@@ -39,7 +38,6 @@ public class BreakPointToggle extends AnAction {
 
 
     List<PsiMethod> psiMethods;
-    public boolean isActive;
 
 
     public void actionPerformed(AnActionEvent event) {
@@ -51,27 +49,18 @@ public class BreakPointToggle extends AnAction {
         event.getData(LangDataKeys.PSI_FILE);
 
 
-        if(isActive){
-            isActive = false;
-            removeAllMethodBreakpoint(project);
+        if(GeneralConfig.isActive){
+            GeneralConfig.isActive = false;
+            RemoveAll.execute(project);
         }else {
-            isActive = true;
-            removeAllMethodBreakpoint(project);
+            GeneralConfig.isActive = true;
+            RemoveAll.execute(project);
             getPackages(project);
         }
 
 
 
 
-    }
-
-    public void removeAllMethodBreakpoint(Project project){
-        List<Breakpoint> breakpoints = DebuggerManagerEx.getInstanceEx(project).getBreakpointManager().getBreakpoints();
-        for(Breakpoint breakpoint : breakpoints){
-            if(breakpoint.getCategory().toString().equals("method_breakpoints")){
-                DebuggerManagerEx.getInstanceEx(project).getBreakpointManager().removeBreakpoint(breakpoint);
-            }
-        }
     }
 
 
@@ -107,23 +96,7 @@ public class BreakPointToggle extends AnAction {
 
 
             if(psiFile.getFileType().getDefaultExtension().equals("java")){
-                final PsiDocumentManager manager = PsiDocumentManager.getInstance(project);
-                final Document document = manager.getDocument(psiFile);
-
-                if(document != null){
-                    String[] docLines = document.getText().split("\n");
-                    for(int i = 0; i<docLines.length;i++){
-                        String line = docLines[i];
-                        if(line.contains("(")){
-                            if(!line.contains(";")){
-                                if(line.contains("private") || line.contains("public") || line.contains("protected")){
-                                    DebuggerManagerEx.getInstanceEx(project).getBreakpointManager().addMethodBreakpoint(document,i);
-                                }
-                            }
-
-                        }
-                    }
-                }
+                SimpleBreakpointInput.execute(project,psiFile);
             }
 
         }

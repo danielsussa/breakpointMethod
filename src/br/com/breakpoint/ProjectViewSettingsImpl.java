@@ -1,3 +1,5 @@
+package br.com.breakpoint;
+
 import com.intellij.ide.projectView.ProjectViewSettings;
 
 /**

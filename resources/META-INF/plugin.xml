@@ -1,11 +1,11 @@
 <idea-plugin>
-  <id>br.com.breakpoint.toogleAll</id>
+  <id>br.com.br.com.breakpoint.breakpoint.toogleAll</id>
   <name>Simple Toogle All Method Breakpoint</name>
   <version>1.0</version>
   <vendor email="danielsussa@gmail.com" url="http://www.yourcompany.com">Without Company</vendor>
 
   <description><![CDATA[
-      A simple Toggle All breakpoint for methods<br>
+      A simple Toggle All br.com.breakpoint.breakpoint for methods<br>
     ]]></description>
 
 
@@ -23,9 +23,14 @@
   </extensions>
 
   <actions>
-    <action id="BreakPointToggle" class="BreakPointToggle" text="_Toggle All Methods Breakpoint" description="Breakpoint for all methods">
+    <action id="br.com.breakpoint.action.BreakPointToggleAll" class="br.com.breakpoint.action.BreakPointToggleAll" text="_Toggle All Methods Breakpoint" description="Breakpoint for all methods">
         <add-to-group group-id="RunMenu" anchor="last"/>
     </action>
+
+    <action id="br.com.breakpoint.action.BreakPointToggleSelected" class="br.com.breakpoint.action.BreakPointToggleSelected" text="_Toggle Method Breakpoint" description="Breakpoint for all methods">
+      <add-to-group group-id="ProjectViewPopupMenuModifyGroup" anchor="last"/>
+    </action>
+
   </actions>
 
 </idea-plugin>
