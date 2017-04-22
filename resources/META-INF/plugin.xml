@@ -1,8 +1,8 @@
 <idea-plugin>
   <id>br.com.br.com.breakpoint.breakpoint.toogleAll</id>
   <name>Simple Toogle All Method Breakpoint</name>
-  <version>1.0</version>
-  <vendor email="danielsussa@gmail.com" url="http://www.yourcompany.com">Without Company</vendor>
+  <version>1.1.2</version>
+  <vendor email="danielsussa@gmail.com" url="https://github.com/danielsussa">DEK - Comp</vendor>
 
   <description><![CDATA[
       A simple Toggle All br.com.breakpoint.breakpoint for methods<br>
