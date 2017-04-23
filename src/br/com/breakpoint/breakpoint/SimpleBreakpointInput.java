@@ -1,6 +1,7 @@
 package br.com.breakpoint.breakpoint;
 
 import com.intellij.debugger.DebuggerManagerEx;
+import com.intellij.debugger.ui.breakpoints.BreakpointManager;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDocumentManager;
@@ -14,7 +15,7 @@ public class SimpleBreakpointInput {
     static public void execute(Project project, PsiFile psiFile){
         final PsiDocumentManager manager = PsiDocumentManager.getInstance(project);
         final Document document = manager.getDocument(psiFile);
-
+        BreakpointManager debugManager =  DebuggerManagerEx.getInstanceEx(project).getBreakpointManager();
         if(document != null){
             String[] docLines = document.getText().split("\n");
             String className = null;
@@ -50,7 +51,7 @@ public class SimpleBreakpointInput {
                             boolean for_value = line.contains("for ") || line.contains(" for ") || line.contains("for(");
                             boolean try_value = line.contains("try ") || line.contains(" try ") || line.contains("try{");
                             if(!try_value && (line.contains(";") || if_value || for_value || line.contains("while") || line.contains("return "))){
-                                GeneralConfig.addBreakpoint(DebuggerManagerEx.getInstanceEx(project).getBreakpointManager().addLineBreakpoint(document,i));
+                                GeneralConfig.addBreakpoint(debugManager.addLineBreakpoint(document,i));
                                 break;
                             }else {
                                 i++;

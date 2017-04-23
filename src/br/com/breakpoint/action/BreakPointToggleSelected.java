@@ -2,6 +2,7 @@ package br.com.breakpoint.action;
 
 import br.com.breakpoint.breakpoint.GeneralConfig;
 import br.com.breakpoint.breakpoint.RemoveAll;
+import br.com.breakpoint.breakpoint.SimpleBracketBreakpointInput;
 import br.com.breakpoint.breakpoint.SimpleBreakpointInput;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.*;
@@ -51,7 +52,7 @@ public class BreakPointToggleSelected extends AnAction {
 
     private void process(PsiElement element){
         if(element instanceof PsiJavaFile || element instanceof PsiClass){
-            SimpleBreakpointInput.execute(element.getProject(),element.getContainingFile());
+            SimpleBracketBreakpointInput.execute(element.getProject(),element.getContainingFile());
         }
         if(element instanceof PsiDirectory){
             PsiElement[] psiElements = element.getChildren();
